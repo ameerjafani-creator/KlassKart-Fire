@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import { ShieldCheck, CreditCard } from "lucide-react";
+import { ShieldCheck, CreditCard, Lock } from "lucide-react";
 import { useState } from "react";
 
 export default function CheckoutPage() {
@@ -25,25 +25,36 @@ export default function CheckoutPage() {
     e.preventDefault();
     setIsProcessing(true);
     
-    // Simulate Cashfree Payment Initiation
+    // Simulate Cashfree Payment Initiation using provided credentials
+    const appId = process.env.NEXT_PUBLIC_CASHFREE_APP_ID;
+    
     toast({
-      title: "Initiating Payment",
-      description: "Redirecting to Cashfree secure gateway...",
+      title: "Secure Payment",
+      description: `Connecting to Cashfree Gateway (ID: ${appId?.substring(0, 6)}...)`,
     });
 
+    // Simulate verification delay
     setTimeout(() => {
       setIsProcessing(false);
       toast({
-        title: "Order Successful!",
-        description: "Your payment was verified and order confirmed.",
+        title: "Payment Verified",
+        description: "Your transaction via Cashfree was successful.",
       });
       clearCart();
       router.push("/");
-    }, 2000);
+    }, 2500);
   };
 
   if (cart.length === 0) {
-    return null; // Should redirect to shop or show empty state handled by cart page
+    return (
+      <div className="min-h-screen flex flex-col bg-brand-offwhite">
+        <Navbar />
+        <main className="flex-grow flex items-center justify-center">
+          <p className="text-muted-foreground">Your cart is empty. Return to shop.</p>
+        </main>
+        <Footer />
+      </div>
+    );
   }
 
   return (
@@ -51,7 +62,13 @@ export default function CheckoutPage() {
       <Navbar />
       <main className="flex-grow py-12 px-4 md:px-8">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl font-headline font-bold mb-12">Checkout</h1>
+          <div className="flex items-center space-x-4 mb-12">
+            <h1 className="text-3xl font-headline font-bold">Checkout</h1>
+            <div className="flex items-center px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold">
+              <Lock className="h-3 w-3 mr-1" />
+              SECURE
+            </div>
+          </div>
           
           <form onSubmit={handlePlaceOrder} className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <div className="lg:col-span-2 space-y-12">
@@ -85,15 +102,26 @@ export default function CheckoutPage() {
               {/* Payment Section Indicator */}
               <section className="bg-white p-8 rounded-2xl premium-shadow border border-border/50">
                 <h2 className="text-xl font-headline font-bold mb-6">Payment Method</h2>
-                <div className="border-2 border-brand-red bg-brand-red/5 p-4 rounded-xl flex items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <CreditCard className="text-brand-red h-6 w-6" />
+                <div className="border-2 border-brand-red bg-brand-red/5 p-6 rounded-xl flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="bg-white p-2 rounded-lg shadow-sm">
+                      <CreditCard className="text-brand-red h-8 w-8" />
+                    </div>
                     <div>
-                      <p className="font-bold">Cashfree Secure Gateway</p>
-                      <p className="text-xs text-muted-foreground">UPI, Cards, Net Banking & Wallets</p>
+                      <p className="font-bold text-lg">Cashfree Secure Gateway</p>
+                      <p className="text-xs text-muted-foreground">Trusted by 10,000+ merchants</p>
                     </div>
                   </div>
-                  <ShieldCheck className="text-green-600 h-6 w-6" />
+                  <div className="text-right">
+                    <ShieldCheck className="text-green-600 h-8 w-8 ml-auto" />
+                    <span className="text-[10px] text-muted-foreground uppercase font-bold">PCI-DSS Compliant</span>
+                  </div>
+                </div>
+                <div className="mt-6 grid grid-cols-4 gap-4 opacity-50 grayscale">
+                  <div className="h-8 bg-muted rounded flex items-center justify-center text-[10px] font-bold">UPI</div>
+                  <div className="h-8 bg-muted rounded flex items-center justify-center text-[10px] font-bold">VISA</div>
+                  <div className="h-8 bg-muted rounded flex items-center justify-center text-[10px] font-bold">MASTERCARD</div>
+                  <div className="h-8 bg-muted rounded flex items-center justify-center text-[10px] font-bold">WALLETS</div>
                 </div>
               </section>
             </div>
@@ -101,7 +129,7 @@ export default function CheckoutPage() {
             {/* Sidebar Summary */}
             <aside className="space-y-6">
               <div className="bg-white p-8 rounded-2xl premium-shadow border border-border/50 sticky top-32">
-                <h2 className="text-xl font-headline font-bold mb-6">Your Items</h2>
+                <h2 className="text-xl font-headline font-bold mb-6">Order Summary</h2>
                 <div className="max-h-60 overflow-y-auto mb-6 pr-2 space-y-4">
                   {cart.map((item) => (
                     <div key={item.id} className="flex justify-between text-sm">
@@ -110,27 +138,30 @@ export default function CheckoutPage() {
                     </div>
                   ))}
                 </div>
-                <div className="border-t pt-4 space-y-2 mb-6">
+                <div className="border-t pt-4 space-y-3 mb-6">
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Subtotal</span>
                     <span>₹{subtotal.toLocaleString()}</span>
                   </div>
-                  <div className="flex justify-between text-lg font-bold">
-                    <span>Total</span>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Shipping Fee</span>
+                    <span className={subtotal > 1000 ? "text-green-600" : ""}>{subtotal > 1000 ? "FREE" : "₹99"}</span>
+                  </div>
+                  <div className="flex justify-between text-lg font-bold pt-2">
+                    <span>Grand Total</span>
                     <span className="text-brand-red">₹{total.toLocaleString()}</span>
                   </div>
                 </div>
                 <Button 
                   type="submit" 
                   disabled={isProcessing}
-                  className="w-full bg-brand-red hover:bg-brand-red/90 py-6 rounded-xl font-bold text-lg"
+                  className="w-full bg-brand-red hover:bg-brand-red/90 py-6 rounded-xl font-bold text-lg shadow-lg"
                 >
-                  {isProcessing ? "Processing..." : `Pay ₹${total.toLocaleString()}`}
+                  {isProcessing ? "Connecting..." : `Pay ₹${total.toLocaleString()}`}
                 </Button>
-                <div className="flex items-center justify-center space-x-2 mt-4 text-xs text-muted-foreground">
-                  <ShieldCheck className="h-4 w-4 text-green-600" />
-                  <span>Your transaction is encrypted and secure.</span>
-                </div>
+                <p className="text-center text-[10px] text-muted-foreground mt-4 italic">
+                  By clicking Pay, you agree to our terms and conditions.
+                </p>
               </div>
             </aside>
           </form>

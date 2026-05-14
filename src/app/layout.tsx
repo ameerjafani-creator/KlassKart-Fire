@@ -2,6 +2,7 @@
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: 'Klass Kart | Premium Shopping Experience',
@@ -23,6 +24,8 @@ export default function RootLayout({
       <body className="font-body antialiased bg-brand-offwhite text-foreground selection:bg-brand-red selection:text-white">
         {children}
         <Toaster />
+        {/* Cashfree SDK Script for checkout integration */}
+        <Script src="https://sdk.cashfree.com/js/v3/cashfree.js" strategy="lazyOnload" />
       </body>
     </html>
   );
