@@ -1,3 +1,4 @@
+
 "use client";
 
 import Image from "next/image";
@@ -37,7 +38,12 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="animated-border group hover-lift premium-shadow">
       <div className="animated-border-content">
-        <Link href={`/product/${product.id}`} className="block relative aspect-square">
+        <Link 
+          href={`/product/${product.id}`} 
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block relative aspect-square"
+        >
           <Image
             src={product.image}
             alt={product.name}
@@ -54,7 +60,12 @@ export default function ProductCard({ product }: ProductCardProps) {
         </Link>
         
         <div className="p-4 space-y-2">
-          <Link href={`/product/${product.id}`} className="block">
+          <Link 
+            href={`/product/${product.id}`} 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block"
+          >
             <h3 className="font-semibold text-sm line-clamp-2 group-hover:text-brand-red transition-colors min-h-[40px]">
               {product.name}
             </h3>
@@ -70,7 +81,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
           <div className="flex items-center justify-between pt-2">
             <div className="flex flex-col">
-              <span className="font-headline font-bold text-lg text-brand-charcoal dark:text-foreground">
+              <span className="font-headline font-bold text-lg text-brand-charcoal dark:text-white">
                 ₹{product.price.toLocaleString()}
               </span>
               {product.discountPrice && (
