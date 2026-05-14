@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "hero-electronics",
-      "description": "Premium Electronics Banner",
-      "imageUrl": "https://picsum.photos/seed/elec1/1200/600",
-      "imageHint": "electronics gadgets"
+      "description": "Premium Lifestyle Banner",
+      "imageUrl": "https://picsum.photos/seed/doghero/1200/600",
+      "imageHint": "golden retriever"
     },
     {
       "id": "hero-fashion",

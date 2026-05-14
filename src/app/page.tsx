@@ -81,7 +81,6 @@ export default async function Home() {
       pastPurchases: []
     });
   } catch (e: any) {
-    // If the flow itself throws, we log and proceed with null to show default content
     console.error("AI recommendation failed to execute:", e?.message || "Unknown error");
   }
 
@@ -100,19 +99,20 @@ export default async function Home() {
             fill
             className="object-cover"
             priority
+            data-ai-hint="golden retriever"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-brand-charcoal/80 to-transparent flex items-center">
             <div className="max-w-7xl mx-auto px-4 md:px-8 w-full animate-fade-in">
               <div className="max-w-xl space-y-6">
                 <Badge className="bg-brand-red text-white py-1 px-4 text-sm font-semibold uppercase tracking-widest border-none">
-                  Summer Collection 2024
+                  Special Offer 2024
                 </Badge>
                 <h1 className="text-4xl md:text-7xl text-white font-headline leading-tight">
-                  Premium Quality, <br />
+                  Unconditional Love, <br />
                   <span className="text-brand-red">Modern Lifestyle.</span>
                 </h1>
                 <p className="text-gray-300 text-lg max-w-md">
-                  Discover a curated selection of world-class products designed for those who value excellence.
+                  Discover products that bring joy to you and your companions. Quality meets excellence at Klass Kart.
                 </p>
                 <div className="flex space-x-4">
                   <Button asChild size="lg" className="bg-brand-red hover:bg-brand-red/90 rounded-full px-8">
