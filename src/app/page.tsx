@@ -1,4 +1,3 @@
-
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
@@ -179,7 +178,7 @@ export default async function Home() {
         )}
 
         {/* Featured Products */}
-        <section className="py-20">
+        <section className="py-20 bg-ivory">
           <div className="max-w-7xl mx-auto px-4 md:px-8">
             <div className="flex items-center justify-between mb-12">
               <div className="space-y-2">
