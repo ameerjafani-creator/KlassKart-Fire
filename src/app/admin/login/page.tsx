@@ -24,7 +24,7 @@ export default function AdminLoginPage() {
 
     // Mock admin authentication
     setTimeout(() => {
-      if (username === "Jafani" && password === "admin123") {
+      if (username === "Jafani" && password === "Kottakkal@3") {
         toast({
           title: "Access Granted",
           description: "Welcome to the Klass Kart Command Center.",
