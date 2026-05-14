@@ -29,7 +29,7 @@ export default function CheckoutPage() {
     setIsProcessing(true);
     setPaymentStep("processing");
     
-    const appId = process.env.NEXT_PUBLIC_CASHFREE_APP_ID;
+    const appId = process.env.12735374024dea7daf0153713fa7353721;
     
     toast({
       title: "Initiating Payment",
