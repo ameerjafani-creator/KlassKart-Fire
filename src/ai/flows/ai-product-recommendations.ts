@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview Provides personalized product recommendations based on user browsing history, trending items, and past purchases.
@@ -63,7 +64,14 @@ const aiProductRecommendationsFlow = ai.defineFlow(
     outputSchema: AIProductRecommendationsOutputSchema,
   },
   async (input) => {
-    const { output } = await prompt(input);
-    return output!;
+    try {
+      const { output } = await prompt(input);
+      if (!output) throw new Error("No output generated from AI");
+      return output;
+    } catch (error: any) {
+      console.error("AI Flow execution error:", error);
+      // Surface a more descriptive error message
+      throw new Error(`AI Recommendation service failed: ${error.message || 'Unknown error'}`);
+    }
   }
 );

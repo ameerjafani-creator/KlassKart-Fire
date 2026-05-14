@@ -81,7 +81,8 @@ export default async function Home() {
       pastPurchases: []
     });
   } catch (e: any) {
-    console.error("AI recommendation failed:", e?.message || e);
+    // Log detailed error but allow page to render without recommendations
+    console.error("AI recommendation failed:", e instanceof Error ? e.message : e);
   }
 
   return (
@@ -147,7 +148,7 @@ export default async function Home() {
         </section>
 
         {/* AI Recommendations */}
-        {aiRecs && (
+        {aiRecs && aiRecs.recommendations && (
           <section className="py-16 bg-brand-red/5">
             <div className="max-w-7xl mx-auto px-4 md:px-8">
               <div className="flex items-center space-x-2 mb-8">
