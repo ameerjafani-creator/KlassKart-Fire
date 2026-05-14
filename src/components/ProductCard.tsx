@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -16,6 +15,8 @@ export default function ProductCard({ product }: ProductCardProps) {
   const { addToCart, toggleWishlist, wishlist } = useStore();
   const { toast } = useToast();
   const isWishlisted = wishlist.some((p) => p.id === product.id);
+
+  const savings = product.discountPrice ? product.discountPrice - product.price : 0;
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -36,8 +37,8 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <div className="animated-border group hover-lift premium-shadow">
-      <div className="animated-border-content">
+    <div className="animated-border group hover-lift premium-shadow h-full">
+      <div className="animated-border-content flex flex-col h-full bg-card">
         <Link 
           href={`/product/${product.id}`} 
           target="_blank"
@@ -53,13 +54,18 @@ export default function ProductCard({ product }: ProductCardProps) {
           />
           <button 
             onClick={handleToggleWishlist}
-            className={`absolute top-3 right-3 p-2 rounded-full bg-white/80 backdrop-blur-sm transition-colors ${isWishlisted ? 'text-brand-red' : 'text-muted-foreground hover:text-brand-red'}`}
+            className={`absolute top-3 right-3 p-2 rounded-full bg-white/80 backdrop-blur-sm transition-colors z-20 ${isWishlisted ? 'text-brand-red' : 'text-muted-foreground hover:text-brand-red'}`}
           >
             <Heart className={`h-5 w-5 ${isWishlisted ? 'fill-current' : ''}`} />
           </button>
+          {savings > 0 && (
+            <div className="absolute top-3 left-3 bg-brand-red text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-tighter">
+              Save ₹{savings.toLocaleString()}
+            </div>
+          )}
         </Link>
         
-        <div className="p-4 space-y-2">
+        <div className="p-4 flex flex-col flex-grow space-y-2">
           <Link 
             href={`/product/${product.id}`} 
             target="_blank"
@@ -79,15 +85,20 @@ export default function ProductCard({ product }: ProductCardProps) {
             <span className="text-[10px] text-muted-foreground uppercase tracking-wider">{product.brand}</span>
           </div>
 
-          <div className="flex items-center justify-between pt-2">
+          <div className="flex items-center justify-between pt-2 mt-auto">
             <div className="flex flex-col">
               <span className="font-headline font-bold text-lg text-brand-charcoal dark:text-white">
                 ₹{product.price.toLocaleString()}
               </span>
               {product.discountPrice && (
-                <span className="text-xs text-muted-foreground line-through">
-                  ₹{product.discountPrice.toLocaleString()}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-muted-foreground line-through">
+                    ₹{product.discountPrice.toLocaleString()}
+                  </span>
+                  <span className="text-[10px] font-bold text-green-600">
+                    -{Math.round((savings / product.discountPrice) * 100)}%
+                  </span>
+                </div>
               )}
             </div>
             <Button 

@@ -1,4 +1,3 @@
-
 "use client";
 
 import { use } from "react";
@@ -17,7 +16,8 @@ import {
   ShieldCheck, 
   Truck, 
   RotateCcw,
-  CheckCircle2
+  CheckCircle2,
+  Tag
 } from "lucide-react";
 import Image from "next/image";
 
@@ -40,6 +40,8 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
       </div>
     );
   }
+
+  const savings = product.discountPrice ? product.discountPrice - product.price : 0;
 
   const handleAddToCart = () => {
     addToCart(product);
@@ -75,7 +77,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             <div className="space-y-8">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <Badge className="bg-brand-red text-white uppercase tracking-widest text-[10px] px-3">
+                  <Badge className="bg-brand-red text-white uppercase tracking-widest text-[10px] px-3 border-none">
                     {product.brand}
                   </Badge>
                   <div className="flex items-center text-yellow-500 gap-1">
@@ -87,14 +89,23 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 <h1 className="text-3xl md:text-4xl font-headline font-bold text-brand-charcoal leading-tight">
                   {product.name}
                 </h1>
-                <div className="flex items-baseline space-x-4">
-                  <span className="text-4xl font-headline font-bold text-brand-red">
-                    ₹{product.price.toLocaleString()}
-                  </span>
-                  {product.discountPrice && (
-                    <span className="text-xl text-muted-foreground line-through">
-                      ₹{product.discountPrice.toLocaleString()}
+                
+                <div className="space-y-2">
+                  <div className="flex items-baseline space-x-4">
+                    <span className="text-4xl font-headline font-bold text-brand-red">
+                      ₹{product.price.toLocaleString()}
                     </span>
+                    {product.discountPrice && (
+                      <span className="text-xl text-muted-foreground line-through">
+                        ₹{product.discountPrice.toLocaleString()}
+                      </span>
+                    )}
+                  </div>
+                  {savings > 0 && (
+                    <div className="flex items-center gap-2 text-green-600 font-bold bg-green-50 w-fit px-3 py-1 rounded-lg border border-green-100">
+                      <Tag className="h-4 w-4" />
+                      <span className="text-sm">You save ₹{savings.toLocaleString()} ({Math.round((savings / product.discountPrice!) * 100)}% off)</span>
+                    </div>
                   )}
                 </div>
               </div>
