@@ -1,3 +1,64 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-electronics",
+      "description": "Premium Electronics Banner",
+      "imageUrl": "https://picsum.photos/seed/elec1/1200/600",
+      "imageHint": "electronics gadgets"
+    },
+    {
+      "id": "hero-fashion",
+      "description": "Modern Fashion Banner",
+      "imageUrl": "https://picsum.photos/seed/fash1/1200/600",
+      "imageHint": "fashion clothes"
+    },
+    {
+      "id": "cat-electronics",
+      "description": "Electronics Category",
+      "imageUrl": "https://picsum.photos/seed/cat1/400/400",
+      "imageHint": "laptop smartphone"
+    },
+    {
+      "id": "cat-fashion",
+      "description": "Fashion Category",
+      "imageUrl": "https://picsum.photos/seed/cat2/400/400",
+      "imageHint": "clothing apparel"
+    },
+    {
+      "id": "cat-home",
+      "description": "Home & Kitchen Category",
+      "imageUrl": "https://picsum.photos/seed/cat3/400/400",
+      "imageHint": "home kitchen"
+    },
+    {
+      "id": "cat-beauty",
+      "description": "Beauty Category",
+      "imageUrl": "https://picsum.photos/seed/cat4/400/400",
+      "imageHint": "beauty cosmetics"
+    },
+    {
+      "id": "prod-phone",
+      "description": "Premium Smartphone",
+      "imageUrl": "https://picsum.photos/seed/prod1/600/600",
+      "imageHint": "smartphone mobile"
+    },
+    {
+      "id": "prod-watch",
+      "description": "Luxury Watch",
+      "imageUrl": "https://picsum.photos/seed/prod2/600/600",
+      "imageHint": "luxury watch"
+    },
+    {
+      "id": "prod-headphones",
+      "description": "Wireless Headphones",
+      "imageUrl": "https://picsum.photos/seed/prod3/600/600",
+      "imageHint": "headphones audio"
+    },
+    {
+      "id": "prod-shirt",
+      "description": "Designer T-Shirt",
+      "imageUrl": "https://picsum.photos/seed/prod4/600/600",
+      "imageHint": "tshirt fashion"
+    }
+  ]
 }
