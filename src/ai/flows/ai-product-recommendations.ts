@@ -64,14 +64,22 @@ const aiProductRecommendationsFlow = ai.defineFlow(
     outputSchema: AIProductRecommendationsOutputSchema,
   },
   async (input) => {
+    // Check if API key exists to avoid cryptic runtime errors
+    if (!process.env.GOOGLE_GENAI_API_KEY) {
+      console.warn("GOOGLE_GENAI_API_KEY is missing. Skipping AI recommendations.");
+      return { recommendations: [] };
+    }
+
     try {
       const { output } = await prompt(input);
-      if (!output) throw new Error("No output generated from AI");
+      if (!output) {
+        return { recommendations: [] };
+      }
       return output;
     } catch (error: any) {
+      // Log the error for debugging but return an empty state to prevent page crash
       console.error("AI Flow execution error:", error);
-      // Surface a more descriptive error message
-      throw new Error(`AI Recommendation service failed: ${error.message || 'Unknown error'}`);
+      return { recommendations: [] };
     }
   }
 );

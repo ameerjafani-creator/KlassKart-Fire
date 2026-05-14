@@ -81,9 +81,11 @@ export default async function Home() {
       pastPurchases: []
     });
   } catch (e: any) {
-    // Log detailed error but allow page to render without recommendations
-    console.error("AI recommendation failed:", e instanceof Error ? e.message : e);
+    // If the flow itself throws, we log and proceed with null to show default content
+    console.error("AI recommendation failed to execute:", e?.message || "Unknown error");
   }
+
+  const hasRecommendations = aiRecs && aiRecs.recommendations && aiRecs.recommendations.length > 0;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -148,7 +150,7 @@ export default async function Home() {
         </section>
 
         {/* AI Recommendations */}
-        {aiRecs && aiRecs.recommendations && (
+        {hasRecommendations && (
           <section className="py-16 bg-brand-red/5">
             <div className="max-w-7xl mx-auto px-4 md:px-8">
               <div className="flex items-center space-x-2 mb-8">
@@ -156,7 +158,7 @@ export default async function Home() {
                 <h2 className="text-2xl font-bold">Personalized for You</h2>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {aiRecs.recommendations.map((rec, idx) => (
+                {aiRecs!.recommendations.map((rec, idx) => (
                   <div key={idx} className="bg-white p-6 rounded-2xl border border-brand-red/10 shadow-sm relative overflow-hidden group">
                     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                       <Sparkles className="h-20 w-20 text-brand-red" />
