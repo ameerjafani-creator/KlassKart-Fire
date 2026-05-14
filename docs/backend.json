@@ -31,6 +31,22 @@
         "uid",
         "email"
       ]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Represents a customer order and its payment status.",
+      "type": "object",
+      "properties": {
+        "orderId": { "type": "string" },
+        "userId": { "type": "string" },
+        "items": { "type": "array" },
+        "totalAmount": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "paid", "failed"] },
+        "paymentId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "shippingAddress": { "type": "object" }
+      },
+      "required": ["orderId", "items", "totalAmount", "status"]
     }
   },
   "auth": {
@@ -43,6 +59,10 @@
     "/users/{userId}": {
       "schema": "#/entities/UserProfile",
       "description": "User profiles indexed by their unique Firebase UID."
+    },
+    "/orders/{orderId}": {
+      "schema": "#/entities/Order",
+      "description": "Customer orders and payment records."
     }
   }
 }
