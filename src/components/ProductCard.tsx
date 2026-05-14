@@ -85,20 +85,20 @@ export default function ProductCard({ product }: ProductCardProps) {
             <span className="text-[10px] text-muted-foreground uppercase tracking-wider">{product.brand}</span>
           </div>
 
-          <div className="flex items-center justify-between pt-2 mt-auto">
-            <div className="flex flex-col">
-              <span className="font-headline font-bold text-lg text-brand-charcoal dark:text-white">
-                ₹{product.price.toLocaleString()}
-              </span>
+          <div className="flex items-end justify-between pt-2 mt-auto">
+            <div className="flex flex-col space-y-0.5">
               {product.discountPrice && (
-                <div className="flex items-center gap-2">
-                  <span className="text-xs text-muted-foreground line-through">
-                    ₹{product.discountPrice.toLocaleString()}
-                  </span>
-                  <span className="text-[10px] font-bold text-green-600">
-                    -{Math.round((savings / product.discountPrice) * 100)}%
-                  </span>
-                </div>
+                <span className="text-[10px] text-muted-foreground font-medium">
+                  MRP: <span className="line-through">₹{product.discountPrice.toLocaleString()}</span>
+                </span>
+              )}
+              <span className="font-headline font-bold text-base text-brand-charcoal dark:text-white leading-tight">
+                Buy at ₹{product.price.toLocaleString()}
+              </span>
+              {savings > 0 && (
+                <span className="text-[10px] font-bold text-green-600">
+                  You Save ₹{savings.toLocaleString()}
+                </span>
               )}
             </div>
             <Button 

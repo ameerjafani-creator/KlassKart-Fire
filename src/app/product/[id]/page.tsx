@@ -90,21 +90,21 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                   {product.name}
                 </h1>
                 
-                <div className="space-y-2">
-                  <div className="flex items-baseline space-x-4">
-                    <span className="text-4xl font-headline font-bold text-brand-red">
-                      ₹{product.price.toLocaleString()}
-                    </span>
-                    {product.discountPrice && (
-                      <span className="text-xl text-muted-foreground line-through">
-                        ₹{product.discountPrice.toLocaleString()}
-                      </span>
-                    )}
+                <div className="space-y-3">
+                  {product.discountPrice && (
+                    <div className="text-sm text-muted-foreground font-medium">
+                      MRP: <span className="line-through">₹{product.discountPrice.toLocaleString()}</span>
+                    </div>
+                  )}
+                  <div className="text-4xl font-headline font-bold text-brand-red">
+                    Buy at ₹{product.price.toLocaleString()}
                   </div>
                   {savings > 0 && (
-                    <div className="flex items-center gap-2 text-green-600 font-bold bg-green-50 w-fit px-3 py-1 rounded-lg border border-green-100">
+                    <div className="flex items-center gap-2 text-green-600 font-bold bg-green-50 w-fit px-4 py-2 rounded-xl border border-green-100">
                       <Tag className="h-4 w-4" />
-                      <span className="text-sm">You save ₹{savings.toLocaleString()} ({Math.round((savings / product.discountPrice!) * 100)}% off)</span>
+                      <span className="text-base uppercase">
+                        You Save ₹{savings.toLocaleString()} ({Math.round((savings / product.discountPrice!) * 100)}% OFF)
+                      </span>
                     </div>
                   )}
                 </div>
