@@ -1,6 +1,8 @@
 
+"use client";
+
 import Link from "next/link";
-import { Mail, Phone, MapPin, Facebook, Instagram, Twitter } from "lucide-react";
+import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, ShieldCheck } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -66,8 +68,18 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto border-t border-gray-800 mt-16 pt-8 text-center text-xs text-gray-500">
+      <div className="max-w-7xl mx-auto border-t border-gray-800 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-center text-xs text-gray-500 gap-4">
         <p>&copy; {new Date().getFullYear()} Klass Kart. All rights reserved.</p>
+        <div className="flex items-center space-x-6">
+          <Link href="/admin/login" className="flex items-center space-x-1 hover:text-white transition-colors">
+            <ShieldCheck className="h-3 w-3" />
+            <span>Staff Portal</span>
+          </Link>
+          <div className="flex items-center space-x-2">
+            <img src="https://picsum.photos/seed/cf/50/20" alt="Cashfree" className="h-4 opacity-50 grayscale hover:grayscale-0 transition-all" />
+            <span>Secure Checkout</span>
+          </div>
+        </div>
       </div>
     </footer>
   );
