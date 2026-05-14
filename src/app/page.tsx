@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
@@ -79,8 +80,8 @@ export default async function Home() {
       trendingItems: ["V2 Headphones", "Luxury Watch"],
       pastPurchases: []
     });
-  } catch (e) {
-    console.error("AI recommendation failed", e);
+  } catch (e: any) {
+    console.error("AI recommendation failed:", e?.message || e);
   }
 
   return (
@@ -91,7 +92,7 @@ export default async function Home() {
         {/* Hero Section */}
         <section className="relative h-[400px] md:h-[600px] w-full overflow-hidden">
           <Image
-            src={PlaceHolderImages.find(i => i.id === 'hero-electronics')?.imageUrl || ""}
+            src={PlaceHolderImages.find(i => i.id === 'hero-electronics')?.imageUrl || "https://picsum.photos/seed/hero/1200/600"}
             alt="Hero Banner"
             fill
             className="object-cover"
