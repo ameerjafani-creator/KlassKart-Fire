@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -79,4 +78,18 @@
 
 .hover-lift {
   @apply transition-transform duration-300 hover:-translate-y-1;
+}
+
+/* Animated Border Styles */
+.animated-border {
+  @apply relative p-[2px] overflow-hidden rounded-xl;
+}
+
+.animated-border::before {
+  content: '';
+  @apply absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-[conic-gradient(transparent,transparent,transparent,#D11D2C)] animate-border-spin;
+}
+
+.animated-border-content {
+  @apply relative bg-card rounded-[calc(var(--radius)-2px)] z-10;
 }
