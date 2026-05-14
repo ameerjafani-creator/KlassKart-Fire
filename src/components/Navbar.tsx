@@ -2,17 +2,25 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingCart, Heart, User, Search, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { ShoppingCart, Heart, User, Search, Menu, X, Sun, Moon } from "lucide-react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useStore } from "@/lib/store";
 import { Badge } from "@/components/ui/badge";
+import { useTheme } from "next-themes";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
   const cart = useStore((state) => state.cart);
   const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+  // Avoid hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <nav className="sticky-nav px-4 md:px-8 py-4">
@@ -38,6 +46,18 @@ export default function Navbar() {
 
         {/* Actions */}
         <div className="flex items-center space-x-2 md:space-x-4">
+          {mounted && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="hover:text-brand-red"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            >
+              {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              <span className="sr-only">Toggle theme</span>
+            </Button>
+          )}
+
           <Link href="/wishlist">
             <Button variant="ghost" size="icon" className="relative hover:text-brand-red">
               <Heart className="h-5 w-5" />
@@ -47,7 +67,7 @@ export default function Navbar() {
             <Button variant="ghost" size="icon" className="relative hover:text-brand-red">
               <ShoppingCart className="h-5 w-5" />
               {cartCount > 0 && (
-                <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-brand-red">
+                <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-brand-red text-white">
                   {cartCount}
                 </Badge>
               )}

@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -26,6 +27,29 @@
     --radius: 0.75rem;
     --ivory: 60 100% 97%;
   }
+
+  .dark {
+    --background: 345 5% 10%;
+    --foreground: 0 0% 98%;
+    --card: 345 5% 12%;
+    --card-foreground: 0 0% 98%;
+    --popover: 345 5% 12%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 355 76% 47%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 345 5% 20%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 345 5% 20%;
+    --muted-foreground: 0 0% 65%;
+    --accent: 355 76% 47%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 345 5% 20%;
+    --input: 345 5% 20%;
+    --ring: 355 76% 47%;
+    --ivory: 345 5% 15%; /* Darker variant for dark mode */
+  }
 }
 
 @layer base {
@@ -45,8 +69,12 @@
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
 }
 
+.dark .premium-shadow {
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
 .sticky-nav {
-  @apply sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-border/50;
+  @apply sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50;
 }
 
 .hover-lift {
